@@ -6,25 +6,23 @@
  *
  */
 
-#include <WiFi.h>
+#include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <DHT.h>
 #include <Streaming.h>
 
-#define MQTT_VERSION MQTT_VERSION_3_
-
 #define DHTPIN 21    // what digital pin dht11 is connected to
-#define DHTTYPE DHT22   // DHT 11
+#define DHTTYPE DHT22   // DHT 22
 
 DHT dht(DHTPIN, DHTTYPE);
 
 // configure the following values as neccesary
 const char* ssid = "xxx";
 const char* password = "xxx";
-const char* mqtt_server = "xxx";
+const char* mqtt_server = "test.mosquitto.org";
 const char* mqtt_username = "";
 const char* mqtt_password = "";
-const char* mqtt_topic = "sensors/esp32/dht22_01";
+const char* mqtt_topic = "mysensors/esp32/dht22_01";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -46,7 +44,7 @@ void setup()
     WiFi.begin(ssid, password);
 
     while (WiFi.status() != WL_CONNECTED) {
-        delay(100);
+        delay(500);
         Serial.print(".");
     }
 
@@ -98,7 +96,7 @@ void publish_sensor_readings(){
     dtostrf(humidity, 2, 2, humidityStr);
 
     //format string
-    snprintf(formatted_string, sizeof formatted_string, "{\"temperature\":%s,\"humidity\":%s}", tempStr, humidityStr);
+    snprintf(formatted_string, sizeof(formatted_string), "{\"temperature\":%s,\"humidity\":%s}", tempStr, humidityStr);
     
     // send temperature to the serial console
     Serial << "Sending result: " << formatted_string << endl;
@@ -110,7 +108,7 @@ void reconnect() {
   // Loop until we're reconnected
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
-    if (client.connect("ESP8266Client", mqtt_username, mqtt_password)) {
+    if (client.connect("ESP8266Client_2jo3f28", mqtt_username, mqtt_password)) {
       Serial.println("connected");
     } else {
       Serial.print("failed, rc=");

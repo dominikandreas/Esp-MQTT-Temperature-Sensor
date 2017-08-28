@@ -6,7 +6,9 @@
  *
  */
 
-#include <ESP8266WiFi.h>
+// #include <ESP8266WiFi.h> // uncomment for Esp8266
+// #include <WiFi.h> // uncomment for Esp32
+
 #include <PubSubClient.h>
 #include <DHT.h>
 #include <Streaming.h>

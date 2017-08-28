@@ -6,6 +6,11 @@
  *
  */
 
+if defined(ESP8266)
+  #include <ESP8266WiFi.h>
+elif defined(ESP32)
+  #include <Wifi.h>
+endif
 // #include <ESP8266WiFi.h> // uncomment for Esp8266
 // #include <WiFi.h> // uncomment for Esp32
 
